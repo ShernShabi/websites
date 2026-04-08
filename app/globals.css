@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  /* Font families set here so the whole app can reference them by variable.
+     The actual @font-face rules ship via @fontsource-variable/* imported in
+     app/layout.tsx. */
+  --font-inter: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-playfair: "Playfair Display Variable", Georgia, "Times New Roman",
+    serif;
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-inter);
+  font-weight: 300;
+  letter-spacing: 0.005em;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-fg);
+}
+
+/* Fade-in on scroll — consumed by <FadeIn /> */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+  will-change: opacity, transform;
+}
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .fade-in.is-visible {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Scroll indicator bob — used by Hero */
+@keyframes scroll-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+.scroll-bob {
+  animation: scroll-bob 2.2s ease-in-out infinite;
+}
