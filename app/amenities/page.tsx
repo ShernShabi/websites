@@ -6,96 +6,137 @@ import { config } from "@/site.config";
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata(
     "Amenities",
-    `A deliberate, edited collection of amenities at ${config.businessName}.`
+    `The amenity program at ${config.businessName} in West Hollywood.`
   );
 }
 
-const EXPANDED_AMENITIES = [
+const EXPANDED = [
   {
-    title: "Rooftop Pool & Sundeck",
+    title: "Courtyard Pool & Sundeck",
     description:
-      "A heated 60-foot lap pool crowned by private cabanas, chaise lounges, and 360-degree skyline views. The sundeck is landscaped with mature plantings and offers open-air showers, an attendant-staffed towel service, and a shaded reading lounge. Open year-round.",
+      "A 55-foot saltwater pool ringed in honey travertine and lined with striped umbrellas, low chaise lounges, and a shaded outdoor shower tucked into a wall of flowering jasmine. Attendant-managed towel service through the weekend, cold water and sliced fruit set out by the courtyard team each morning.",
+    tone: "warm",
   },
   {
-    title: "State-of-the-Art Fitness Center",
+    title: "The Larder",
     description:
-      "A double-height atelier outfitted with the full Technogym Artis collection, a dedicated Pilates reformer studio, and private training rooms available by reservation. A separate yoga and meditation room looks onto a small interior courtyard, and personal training can be arranged through the concierge.",
+      "A residents-only pantry and espresso bar on the ground floor, open 7am to 9pm daily. Fresh loaves on the counter each morning from a neighborhood bakery, a rotating selection of California olive oils for tasting, and an espresso bar staffed from opening through lunch.",
+    tone: "warm",
   },
   {
-    title: "Co-Working Lounge",
+    title: "Fitness Studio",
     description:
-      "Library-style workspaces, private phone booths for focused calls, and two bookable conference rooms with high-speed fiber and wireless presentation. Coffee service, filtered water, and concierge-managed print and delivery are available throughout the day.",
+      "A soft-lit atelier overlooking the courtyard, outfitted with a full Technogym collection, a dedicated Pilates corner with a reformer, and a private stretching loft for quiet mornings. Personal training and group mat classes can be arranged through the concierge.",
+    tone: "sage",
   },
   {
-    title: "24-Hour Concierge",
+    title: "The Library",
     description:
-      "A discreet, hospitality-trained team attending to reservations, deliveries, and residence needs at all hours. Services include dry cleaning, grocery coordination, car service, house-sitting arrangements, and a private network of partner providers vetted by the building.",
+      "Two rooms of floor-to-ceiling oak shelves, reading lamps, and deep bouclé armchairs — equal parts workspace and afternoon refuge. Bookable for private meetings, quiet phone calls, or an afternoon with a novel from the rotating resident collection.",
+    tone: "warm",
   },
   {
-    title: "Pet Spa & Dog Park",
+    title: "Rooftop Terrace",
     description:
-      "A dedicated wash station with professional-grade tubs, dryers, and grooming tools, paired with a landscaped dog run on the garden level. Walk and sitting services are available through partner providers, and welcome kits are prepared for new four-legged residents.",
+      "An olive-tree canopy, a long communal dining table, and a row of gas fire pits that open each night at dusk. A view that runs from the Runyon hills to the Pacific on a clear day, and a weekly schedule of informal resident gatherings.",
+    tone: "clay",
   },
   {
-    title: "Private Parking Garage",
+    title: "Resident Concierge",
     description:
-      "Valet-operated, climate-controlled parking with direct elevator access to every residential floor. EV charging stations are available throughout, and vehicles can be held, retrieved, or detailed on request through the concierge.",
+      "A hospitality-trained team on-site from 7am to 11pm daily, handling dry cleaning, deliveries, reservations, house-sitting, car service, dog walking, and the occasional last-minute birthday cake. After hours, a remote concierge is on call.",
+    tone: "warm",
   },
   {
-    title: "Outdoor Kitchen & Fire Pits",
+    title: "Garden Courtyard",
     description:
-      "A terraced entertaining level featuring gas grills, communal dining tables for private dinners, and a row of gas fire pits that open for residents each evening. The space is bookable for private gatherings of up to forty guests.",
+      "At the heart of the building — an old olive tree, a fountain that trickles into terracotta tile, and a row of lemon trees that perfume the air every spring. The courtyard is lit softly by string lights from dusk until midnight and anchors every residence in the building.",
+    tone: "sage",
   },
   {
-    title: "Smart Home Technology",
+    title: "Pet Spa & Run",
     description:
-      "Integrated lighting, climate, shades, and entry managed from a single in-residence control panel and companion mobile app. Keyless entry, guest pre-authorization, and delivery notifications are included as standard in every home.",
+      "A dedicated wash station with professional tubs and dryers, paired with a small, shaded dog run on the garden level. Walk and sitting services are arranged through vetted partners, and welcome kits are prepared for new four-legged residents.",
+    tone: "warm",
   },
 ];
+
+function tone(t: string) {
+  switch (t) {
+    case "sage":
+      return "bg-gradient-to-br from-[#c6cfb4] via-[#a8b594] to-[#7f8f6d]";
+    case "clay":
+      return "bg-gradient-to-br from-[#e6bca4] via-[#d19a78] to-[#a8613f]";
+    default:
+      return "bg-gradient-to-br from-[#e5d6c2] via-[#d3b894] to-[#b68b63]";
+  }
+}
 
 export default function AmenitiesPage() {
   return (
     <>
-      <div className="h-24 bg-white md:h-32" />
+      <div className="h-24 bg-[var(--color-bg)] md:h-32" />
 
-      <section className="bg-white pb-20 md:pb-28">
+      <section className="bg-[var(--color-bg)] pb-16 md:pb-24">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <FadeIn>
-            <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-gold)]">
+            <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
               Amenities
             </span>
-            <h1 className="mt-6 max-w-3xl font-serif text-5xl font-normal leading-[1.05] tracking-tight text-[var(--color-fg)] md:text-6xl">
-              Every daily ritual, considered.
+            <h1 className="mt-6 max-w-4xl font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-8xl">
+              Small pleasures, carefully kept.
             </h1>
-            <div className="mt-8 h-px w-16 bg-[var(--color-gold)]" />
-            <p className="mt-8 max-w-2xl font-sans text-base leading-relaxed text-neutral-600">
-              The amenity program at The Ellington is deliberately edited. A
-              small number of spaces, each considered in its own right, each
-              intended to be used — not merely admired.
+            <div className="mt-10 h-px w-16 bg-[var(--color-terracotta)]" />
+            <p className="mt-10 max-w-2xl font-body text-lg leading-loose text-[var(--color-fg)]/70">
+              Spaces designed around the quiet hours of the day — a pool you
+              can swim before anyone else is up, a library with a good lamp,
+              a courtyard that smells like lemon in April.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      <section className="bg-neutral-50 py-20 md:py-28">
+      <section className="bg-[var(--color-line)]/40 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
-          <div className="grid grid-cols-1 gap-x-16 gap-y-16 md:grid-cols-2">
-            {EXPANDED_AMENITIES.map((item, i) => (
-              <FadeIn key={item.title} delay={(i % 2) * 80}>
-                <article className="border-t-2 border-[var(--color-gold)] bg-white p-10 md:p-12">
-                  <p className="font-sans text-[10px] uppercase tracking-[0.22em] text-neutral-500">
-                    0{i + 1}
-                  </p>
-                  <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-[var(--color-fg)]">
-                    {item.title}
-                  </h2>
-                  <div className="mt-6 h-px w-10 bg-[var(--color-gold)]" />
-                  <p className="mt-6 font-sans text-base leading-relaxed text-neutral-600">
-                    {item.description}
-                  </p>
-                </article>
-              </FadeIn>
-            ))}
+          <div className="space-y-12 md:space-y-16">
+            {EXPANDED.map((item, i) => {
+              const reverse = i % 2 === 1;
+              return (
+                <FadeIn key={item.title}>
+                  <article
+                    className={`grid grid-cols-1 items-stretch overflow-hidden rounded-2xl bg-[var(--color-bg)] shadow-lg transition-transform duration-500 hover:scale-[1.01] md:grid-cols-12`}
+                  >
+                    <div
+                      className={`relative aspect-[4/3] md:aspect-auto md:col-span-5 ${
+                        reverse ? "md:order-2" : ""
+                      }`}
+                    >
+                      <div className={`relative h-full w-full ${tone(item.tone)}`}>
+                        <div className="grain" aria-hidden />
+                        <div className="relative flex h-full w-full items-center justify-center">
+                          <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-dark)]/40">
+                            Photo
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col justify-center p-10 md:col-span-7 md:p-14 lg:p-16">
+                      <p className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
+                        0{i + 1}
+                      </p>
+                      <h2 className="mt-4 font-display text-3xl font-normal leading-tight text-[var(--color-fg)] md:text-5xl">
+                        {item.title}
+                      </h2>
+                      <div className="mt-6 h-px w-10 bg-[var(--color-terracotta)]" />
+                      <p className="mt-8 max-w-lg font-body text-lg leading-loose text-[var(--color-fg)]/70">
+                        {item.description}
+                      </p>
+                    </div>
+                  </article>
+                </FadeIn>
+              );
+            })}
           </div>
         </div>
       </section>

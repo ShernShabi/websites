@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// Self-hosted via fontsource (equivalent to next/font/google's Inter and
-// Playfair Display). Exposed as --font-inter and --font-playfair in globals.css.
-import "@fontsource-variable/inter/index.css";
-import "@fontsource-variable/playfair-display/index.css";
+// Self-hosted via fontsource (equivalent to next/font/google's DM Sans and
+// DM Serif Display). Exposed as --font-sans and --font-serif in globals.css.
+import "@fontsource-variable/dm-sans/index.css";
+import "@fontsource/dm-serif-display/index.css";
+import "@fontsource/dm-serif-display/400-italic.css";
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingCTA from "@/components/layout/FloatingCTA";
 import { config } from "@/site.config";
 import { apartmentComplexJsonLd } from "@/lib/seo";
 
@@ -32,14 +34,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { colors } = config;
   const bodyStyle = {
-    // Design tokens from site.config.ts, exposed to every component
+    // Warm Modernist design tokens. Exposed to every component.
     "--color-bg": colors.bg,
     "--color-fg": colors.fg,
     "--color-dark": colors.dark,
+    "--color-charcoal": colors.charcoal,
+    "--color-terracotta": colors.terracotta,
+    "--color-terracotta-deep": colors.terracottaDeep,
+    "--color-sage": colors.sage,
     "--color-muted": colors.muted,
     "--color-line": colors.line,
-    "--color-gold": colors.gold,
-    "--color-gold-deep": colors.goldDeep,
   } as React.CSSProperties;
 
   return (
@@ -54,6 +58,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <FloatingCTA />
       </body>
     </html>
   );

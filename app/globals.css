@@ -2,19 +2,19 @@
 
 :root {
   /* Font families set here so the whole app can reference them by variable.
-     The actual @font-face rules ship via @fontsource-variable/* imported in
-     app/layout.tsx. */
-  --font-inter: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
+     The actual @font-face rules ship via @fontsource{-variable}/* imported
+     in app/layout.tsx. */
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-playfair: "Playfair Display Variable", Georgia, "Times New Roman",
-    serif;
+  --font-serif: "DM Serif Display", "Cormorant Garamond", Georgia,
+    "Times New Roman", serif;
 }
 
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-fg);
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-inter);
+  --font-display: var(--font-serif);
+  --font-body: var(--font-sans);
 }
 
 html {
@@ -26,21 +26,42 @@ html {
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: var(--font-inter);
-  font-weight: 300;
-  letter-spacing: 0.005em;
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+  font-feature-settings: "ss01" on, "liga" on;
+}
+
+.font-body {
+  font-family: var(--font-sans);
 }
 
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-fg);
+  background: var(--color-terracotta);
+  color: var(--color-bg);
+}
+
+/* Subtle noise/grain overlay — used on hero & dark warm sections.
+   Inline SVG dot pattern at ~3% opacity. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
 }
 
 /* Fade-in on scroll — consumed by <FadeIn /> */
 .fade-in {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 700ms ease-out, transform 700ms ease-out;
+  transform: translateY(28px);
+  transition: opacity 900ms ease-out, transform 900ms ease-out;
   will-change: opacity, transform;
 }
 .fade-in.is-visible {
@@ -60,7 +81,35 @@ body {
   }
 }
 
-/* Scroll indicator bob — used by Hero */
+/* Horizontal scroll shell used by the FloorPlans rail */
+.scroll-rail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-terracotta) transparent;
+}
+.scroll-rail::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-rail::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-rail::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 9999px;
+}
+.scroll-rail:hover::-webkit-scrollbar-thumb {
+  background: var(--color-terracotta);
+}
+
+/* Hide native scrollbar where we want pure drag/flow */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scroll indicator bob — Hero */
 @keyframes scroll-bob {
   0%,
   100% {
@@ -73,5 +122,5 @@ body {
   }
 }
 .scroll-bob {
-  animation: scroll-bob 2.2s ease-in-out infinite;
+  animation: scroll-bob 2.4s ease-in-out infinite;
 }

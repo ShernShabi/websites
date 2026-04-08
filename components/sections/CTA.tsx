@@ -3,23 +3,47 @@ import FadeIn from "@/components/ui/FadeIn";
 
 export default function CTA() {
   return (
-    <section className="bg-[var(--color-gold)] py-24 md:py-32">
-      <div className="mx-auto max-w-5xl px-6 text-center md:px-10">
+    <section className="bg-[var(--color-bg)] py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
         <FadeIn>
-          <h2 className="font-serif text-4xl font-normal leading-[1.1] tracking-tight text-[var(--color-fg)] md:text-5xl">
-            Schedule Your Private Tour
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl font-sans text-base leading-relaxed text-[var(--color-fg)]/75">
-            Experience the residence in person. Our leasing team is ready to
-            show you around.
-          </p>
-          <div className="mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--color-fg)] px-10 py-4 font-sans text-sm tracking-wide text-white transition-colors duration-300 hover:bg-black"
-            >
-              Book a Tour
-            </Link>
+          <div className="grid grid-cols-1 overflow-hidden rounded-2xl shadow-2xl md:grid-cols-5">
+            {/* LEFT — warm dark text */}
+            <div className="relative flex flex-col justify-center bg-[var(--color-dark)] p-10 text-[var(--color-bg)] md:col-span-3 md:p-16 lg:p-20">
+              <div className="grain" aria-hidden />
+              <div className="relative">
+                <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
+                  Private Tour
+                </span>
+                <h2 className="mt-6 max-w-xl font-display text-4xl font-normal leading-[1.05] text-[var(--color-bg)] md:text-5xl lg:text-6xl">
+                  Come see the light for yourself.
+                </h2>
+                <p className="mt-8 max-w-md font-body text-lg leading-loose text-[var(--color-bg)]/70">
+                  The best way to understand The Linden is to walk the
+                  courtyard at four o&rsquo;clock on a Thursday. Our leasing
+                  team will meet you at the gate.
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT — terracotta button side */}
+            <div className="relative flex flex-col items-start justify-center bg-[var(--color-terracotta)] p-10 text-[var(--color-bg)] md:col-span-2 md:p-16 lg:p-20">
+              <div className="grain" aria-hidden />
+              <div className="relative">
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-bg)]/80">
+                  No pressure, no script
+                </p>
+                <p className="mt-6 max-w-xs font-display text-2xl font-normal italic leading-snug text-[var(--color-bg)] md:text-3xl">
+                  &ldquo;Just come for the courtyard and stay for the
+                  coffee.&rdquo;
+                </p>
+                <Link
+                  href="/contact"
+                  className="mt-10 inline-flex items-center justify-center rounded-full bg-[var(--color-bg)] px-10 py-4 font-body text-sm text-[var(--color-fg)] shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-white"
+                >
+                  Book a Tour
+                </Link>
+              </div>
+            </div>
           </div>
         </FadeIn>
       </div>

@@ -4,64 +4,84 @@ import { config } from "@/site.config";
 
 export default function FloorPlans() {
   return (
-    <section id="floor-plans" className="bg-neutral-50 py-24 md:py-32">
+    <section id="floor-plans" className="bg-[var(--color-line)]/40 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <FadeIn>
           <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-gold)]">
-                Floor Plans
+            <div className="max-w-2xl">
+              <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
+                Residences
               </span>
-              <h2 className="mt-6 max-w-2xl font-serif text-4xl font-normal leading-[1.1] tracking-tight text-[var(--color-fg)] md:text-5xl">
-                Four collections, each drawn with care.
+              <h2 className="mt-6 font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-6xl">
+                Four ways to live here.
               </h2>
+              <p className="mt-8 max-w-xl font-body text-lg leading-loose text-[var(--color-fg)]/70">
+                From a light-filled studio tucked behind the courtyard olive
+                tree to a penthouse with its own plunge pool — each residence
+                is drawn around the California sun.
+              </p>
             </div>
-            <p className="max-w-sm font-sans text-sm leading-relaxed text-neutral-600">
-              From a compact studio to a crowning penthouse, every residence
-              shares the same palette, the same finishes, and the same
-              attention to proportion.
+            <p className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] md:text-right">
+              Drag to explore →
             </p>
           </div>
         </FadeIn>
+      </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {config.floorPlans.map((plan, i) => (
-            <FadeIn key={plan.slug} delay={i * 80}>
-              <Link
-                href={`/floor-plans#${plan.slug}`}
-                className="group flex h-full flex-col border-t-2 border-[var(--color-gold)] bg-white p-10 transition-transform duration-300 hover:-translate-y-1"
-              >
-                <h3 className="font-serif text-2xl font-normal text-[var(--color-fg)]">
-                  {plan.name}
-                </h3>
-                <p className="mt-2 font-sans text-xs uppercase tracking-[0.18em] text-neutral-500">
-                  {plan.squareFootage}
-                </p>
+      {/* Horizontal scroll rail (desktop) · stacked (mobile) */}
+      <FadeIn delay={120}>
+        <div className="scroll-rail mt-16 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-8 md:gap-8 md:px-10 md:pb-10">
+          {config.floorPlans.map((plan) => (
+            <Link
+              key={plan.slug}
+              href={`/floor-plans#${plan.slug}`}
+              className="group flex min-w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[var(--color-bg)] shadow-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-xl sm:min-w-[400px] md:min-w-[440px]"
+            >
+              {/* Placeholder image */}
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-[#e5d6c2] via-[#d3b894] to-[#b68b63]">
+                <div className="flex h-full w-full items-center justify-center">
+                  <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-dark)]/40">
+                    {plan.name}
+                  </span>
+                </div>
+                <div className="absolute left-5 top-5 rounded-full bg-[var(--color-bg)]/90 px-4 py-1.5 font-body text-[10px] uppercase tracking-[0.22em] text-[var(--color-terracotta)] shadow-sm backdrop-blur">
+                  From {plan.startingPrice}
+                </div>
+              </div>
 
-                <div className="my-8 h-px w-10 bg-[var(--color-gold)]" />
+              {/* Body */}
+              <div className="flex flex-1 flex-col p-8 md:p-10">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-3xl font-normal text-[var(--color-fg)]">
+                    {plan.name}
+                  </h3>
+                  <span className="font-body text-xs uppercase tracking-[0.22em] text-[var(--color-muted)]">
+                    {plan.squareFootage}
+                  </span>
+                </div>
 
-                <p className="font-sans text-sm leading-relaxed text-neutral-600">
+                <p className="mt-6 flex-1 font-body text-base leading-loose text-[var(--color-fg)]/70">
                   {plan.description}
                 </p>
 
-                <div className="mt-10 flex items-end justify-between">
-                  <div>
-                    <p className="font-sans text-[10px] uppercase tracking-[0.22em] text-neutral-500">
-                      Starting from
-                    </p>
-                    <p className="mt-1 font-serif text-2xl text-[var(--color-gold)]">
-                      {plan.startingPrice}
-                    </p>
+                <div className="mt-10 flex items-center justify-between border-t border-[var(--color-line)] pt-6">
+                  <div className="font-body text-xs text-[var(--color-muted)]">
+                    {plan.bedrooms === 0 ? "Studio" : `${plan.bedrooms} Bed`}
+                    <span className="mx-2">·</span>
+                    {plan.bathrooms} Bath
                   </div>
-                  <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-fg)] transition-colors duration-300 group-hover:text-[var(--color-gold)]">
-                    View Details →
+                  <span className="font-body text-xs uppercase tracking-[0.22em] text-[var(--color-terracotta)] transition-all duration-300 group-hover:translate-x-1">
+                    Explore →
                   </span>
                 </div>
-              </Link>
-            </FadeIn>
+              </div>
+            </Link>
           ))}
+
+          {/* Trailing spacer so the last card can snap to start */}
+          <div aria-hidden className="min-w-[24px] shrink-0 md:min-w-[40px]" />
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }

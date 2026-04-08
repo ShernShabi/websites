@@ -6,7 +6,7 @@ import { config } from "@/site.config";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/floor-plans", label: "Floor Plans" },
+  { href: "/floor-plans", label: "Residences" },
   { href: "/amenities", label: "Amenities" },
   { href: "/gallery", label: "Gallery" },
   { href: "/#neighborhood", label: "Neighborhood" },
@@ -18,13 +18,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 32);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route-style hash navigation
   useEffect(() => {
     if (!mobileOpen) return;
     const close = () => setMobileOpen(false);
@@ -32,22 +31,20 @@ export default function Navbar() {
     return () => window.removeEventListener("hashchange", close);
   }, [mobileOpen]);
 
-  const onDark = !scrolled && !mobileOpen;
+  const onWarm = !scrolled && !mobileOpen;
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        onDark
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        onWarm
           ? "bg-transparent"
-          : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]"
+          : "bg-[var(--color-bg)]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(44,41,38,0.06)]"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
         <Link
           href="/"
-          className={`font-serif text-2xl tracking-tight transition-colors duration-300 ${
-            onDark ? "text-white" : "text-[var(--color-fg)]"
-          }`}
+          className="font-display text-2xl leading-none tracking-tight text-[var(--color-fg)] transition-colors duration-300"
         >
           {config.shortName}
         </Link>
@@ -57,11 +54,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`font-sans text-sm tracking-wide transition-colors duration-300 ${
-                onDark
-                  ? "text-white/90 hover:text-[var(--color-gold)]"
-                  : "text-[var(--color-fg)] hover:text-[var(--color-gold)]"
-              }`}
+              className="font-body text-sm text-[var(--color-fg)]/80 transition-colors duration-300 hover:text-[var(--color-terracotta)]"
             >
               {link.label}
             </Link>
@@ -71,7 +64,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className="hidden items-center justify-center rounded-full bg-[var(--color-gold)] px-6 py-2.5 font-sans text-sm tracking-wide text-[var(--color-fg)] transition-colors duration-300 hover:bg-[var(--color-gold-deep)] lg:inline-flex"
+            className="hidden items-center justify-center rounded-full bg-[var(--color-terracotta)] px-6 py-2.5 font-body text-sm text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-[var(--color-terracotta-deep)] lg:inline-flex"
           >
             Schedule a Tour
           </Link>
@@ -81,9 +74,7 @@ export default function Navbar() {
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className={`inline-flex h-10 w-10 items-center justify-center lg:hidden ${
-              onDark ? "text-white" : "text-[var(--color-fg)]"
-            }`}
+            className="inline-flex h-10 w-10 items-center justify-center text-[var(--color-fg)] lg:hidden"
           >
             <span className="sr-only">Menu</span>
             <div className="relative h-4 w-6">
@@ -109,7 +100,7 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       <div
-        className={`overflow-hidden bg-white transition-[max-height] duration-300 lg:hidden ${
+        className={`overflow-hidden bg-[var(--color-bg)] transition-[max-height] duration-500 lg:hidden ${
           mobileOpen ? "max-h-[560px] border-t border-[var(--color-line)]" : "max-h-0"
         }`}
       >
@@ -119,7 +110,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="border-b border-[var(--color-line)] py-4 font-sans text-sm tracking-wide text-[var(--color-fg)]"
+              className="border-b border-[var(--color-line)] py-4 font-body text-base text-[var(--color-fg)]"
             >
               {link.label}
             </Link>
@@ -127,7 +118,7 @@ export default function Navbar() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--color-gold)] px-8 py-3.5 font-sans text-sm tracking-wide text-[var(--color-fg)] transition-colors duration-300 hover:bg-[var(--color-gold-deep)]"
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--color-terracotta)] px-8 py-3.5 font-body text-sm text-white transition-all duration-300 hover:bg-[var(--color-terracotta-deep)]"
           >
             Schedule a Tour
           </Link>

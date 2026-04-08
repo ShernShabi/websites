@@ -32,9 +32,7 @@ export default function ContactForm() {
         body: JSON.stringify(payload),
       });
 
-      const data = (await res.json().catch(() => ({}))) as {
-        error?: string;
-      };
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
 
       if (!res.ok) {
         throw new Error(data.error ?? "Something went wrong.");
@@ -50,15 +48,17 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="border-t-2 border-[var(--color-gold)] bg-white p-10 md:p-14">
-        <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-gold)]">
+      <div className="rounded-2xl bg-[var(--color-bg)] p-10 text-center shadow-xl ring-1 ring-[var(--color-line)] md:p-14">
+        <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
           Inquiry Received
         </span>
-        <h3 className="mt-6 font-serif text-3xl font-normal leading-tight text-[var(--color-fg)] md:text-4xl">
-          Thank you for your inquiry.
+        <h3 className="mt-6 font-display text-4xl font-normal leading-tight text-[var(--color-fg)] md:text-5xl">
+          Thank you.
         </h3>
-        <p className="mt-6 max-w-md font-sans text-base leading-relaxed text-neutral-600">
-          Our leasing team will be in touch within 24 hours.
+        <div className="mx-auto mt-6 h-px w-12 bg-[var(--color-terracotta)]" />
+        <p className="mx-auto mt-8 max-w-md font-body text-lg leading-loose text-[var(--color-fg)]/70">
+          Our leasing team will be in touch within 24 hours to arrange a
+          private walk-through of The Linden.
         </p>
       </div>
     );
@@ -68,7 +68,7 @@ export default function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="border-t-2 border-[var(--color-gold)] bg-white p-8 md:p-12"
+      className="rounded-2xl bg-[var(--color-bg)] p-8 shadow-xl ring-1 ring-[var(--color-line)] md:p-12"
     >
       {/* Honeypot */}
       <div className="hidden" aria-hidden>
@@ -83,15 +83,16 @@ export default function ContactForm() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+      <div className="space-y-6">
         <Field label="Full Name" name="name" required />
         <Field label="Email" name="email" type="email" required />
         <Field label="Phone" name="phone" type="tel" />
         <Field label="Desired Move-In" name="moveInDate" placeholder="MM/YYYY" />
-        <div className="md:col-span-2">
+
+        <div>
           <label
             htmlFor="floorPlan"
-            className="font-sans text-[10px] uppercase tracking-[0.22em] text-neutral-500"
+            className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]"
           >
             Residence of Interest
           </label>
@@ -99,7 +100,7 @@ export default function ContactForm() {
             id="floorPlan"
             name="floorPlan"
             defaultValue=""
-            className="mt-2 w-full border-0 border-b border-[var(--color-line)] bg-transparent py-3 font-sans text-base text-[var(--color-fg)] focus:border-[var(--color-gold)] focus:outline-none focus:ring-0"
+            className="mt-3 w-full rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
           >
             {FLOOR_PLAN_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -109,20 +110,20 @@ export default function ContactForm() {
           </select>
         </div>
 
-        <div className="md:col-span-2">
+        <div>
           <label
             htmlFor="message"
-            className="font-sans text-[10px] uppercase tracking-[0.22em] text-neutral-500"
+            className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]"
           >
-            Message<span className="ml-1 text-[var(--color-gold)]">*</span>
+            Message<span className="ml-1 text-[var(--color-terracotta)]">*</span>
           </label>
           <textarea
             id="message"
             name="message"
             required
-            rows={4}
-            className="mt-2 w-full resize-none border-0 border-b border-[var(--color-line)] bg-transparent py-3 font-sans text-base text-[var(--color-fg)] placeholder:text-neutral-400 focus:border-[var(--color-gold)] focus:outline-none focus:ring-0"
-            placeholder="Tell us a little about what you&rsquo;re looking for."
+            rows={5}
+            className="mt-3 w-full resize-none rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
+            placeholder="Tell us what you&rsquo;re looking for — a sunny courtyard-side studio, a penthouse with a plunge pool, or something in between."
           />
         </div>
       </div>
@@ -130,28 +131,28 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-10 inline-flex w-full items-center justify-center rounded-full bg-[var(--color-gold)] px-8 py-4 font-sans text-sm tracking-wide text-[var(--color-fg)] transition-colors duration-300 hover:bg-[var(--color-gold-deep)] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-10 inline-flex w-full items-center justify-center rounded-full bg-[var(--color-terracotta)] px-8 py-4 font-body text-sm text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:bg-[var(--color-terracotta-deep)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "submitting" ? "Submitting…" : "Submit Inquiry"}
       </button>
 
       {status === "error" && (
-        <div className="mt-6 border-t border-red-100 pt-6">
-          <p className="font-sans text-sm text-red-600">
-            {error ?? "We couldn&rsquo;t submit your inquiry."}
+        <div className="mt-6 rounded-lg bg-[var(--color-terracotta)]/10 p-5">
+          <p className="font-body text-sm text-[var(--color-terracotta-deep)]">
+            {error ?? "We couldn't submit your inquiry."}
           </p>
-          <p className="mt-3 font-sans text-xs leading-relaxed text-neutral-500">
+          <p className="mt-3 font-body text-xs leading-relaxed text-[var(--color-fg)]/70">
             Please reach out directly at{" "}
             <a
               href={`mailto:${config.email}`}
-              className="underline decoration-[var(--color-gold)] underline-offset-4"
+              className="underline decoration-[var(--color-terracotta)] underline-offset-4"
             >
               {config.email}
             </a>{" "}
             or{" "}
             <a
               href={`tel:${config.phone.replace(/[^0-9+]/g, "")}`}
-              className="underline decoration-[var(--color-gold)] underline-offset-4"
+              className="underline decoration-[var(--color-terracotta)] underline-offset-4"
             >
               {config.phone}
             </a>
@@ -180,10 +181,10 @@ function Field({
     <div>
       <label
         htmlFor={name}
-        className="font-sans text-[10px] uppercase tracking-[0.22em] text-neutral-500"
+        className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]"
       >
         {label}
-        {required && <span className="ml-1 text-[var(--color-gold)]">*</span>}
+        {required && <span className="ml-1">*</span>}
       </label>
       <input
         id={name}
@@ -191,7 +192,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="mt-2 w-full border-0 border-b border-[var(--color-line)] bg-transparent py-3 font-sans text-base text-[var(--color-fg)] placeholder:text-neutral-400 focus:border-[var(--color-gold)] focus:outline-none focus:ring-0"
+        className="mt-3 w-full rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
       />
     </div>
   );

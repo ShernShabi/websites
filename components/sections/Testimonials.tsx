@@ -1,100 +1,83 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import FadeIn from "@/components/ui/FadeIn";
 
 const TESTIMONIALS = [
   {
     quote:
-      "We moved in quietly three years ago and still feel like we discovered something rare. The light, the service, the way the building just works — it has changed what we expect from a home.",
-    name: "Helena & Marcus Whitfield",
-    detail: "Residents since 2022",
+      "The first morning I woke up here, I made coffee and sat in the courtyard with the olive tree for almost an hour. I didn't check my phone once. That's the best review I can give.",
+    name: "Naomi R.",
+    detail: "Resident since 2023",
   },
   {
     quote:
-      "The concierge team is the best I&rsquo;ve encountered anywhere — attentive without being intrusive, and somehow already one step ahead. It makes the difference between an apartment and a residence.",
-    name: "David Lin",
-    detail: "Penthouse Resident",
+      "The light. Nobody tells you about the light until you live with it — how it comes through the kitchen arch in the morning and throws these long shadows across the plaster. I keep meaning to photograph it and never getting around to it.",
+    name: "Jonah M.",
+    detail: "One-bedroom, Courtyard side",
   },
   {
     quote:
-      "I travel often for work and the peace of mind is extraordinary. Everything is handled, every package, every delivery, every detail. Coming home feels like checking into a favourite hotel — except it&rsquo;s mine.",
-    name: "Priya Chandra",
-    detail: "One Bedroom Resident",
+      "I moved from a much flashier building and I don't miss the flash. The Linden feels like a real place — the concierge knows your dog's name, the fitness studio is always empty when you want it, and the pool is absurd in the best way.",
+    name: "Priya & Daniel K.",
+    detail: "Two-bedroom residents",
   },
 ];
 
 export default function Testimonials() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = window.setInterval(
-      () => setIndex((i) => (i + 1) % TESTIMONIALS.length),
-      7000
-    );
-    return () => window.clearInterval(id);
-  }, []);
-
-  const current = TESTIMONIALS[index];
-
   return (
-    <section className="relative overflow-hidden bg-[var(--color-dark)] py-24 text-white md:py-32">
-      {/* Subtle radial */}
+    <section className="relative overflow-hidden bg-[var(--color-dark)] py-20 text-[var(--color-bg)] md:py-28">
+      <div className="grain" aria-hidden />
+
+      {/* Warm glow */}
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="pointer-events-none absolute -right-40 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full opacity-10 blur-3xl"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(201,169,97,0.08) 0%, rgba(26,26,46,1) 60%)",
+            "radial-gradient(circle, var(--color-terracotta) 0%, transparent 60%)",
         }}
       />
 
-      <div className="relative mx-auto max-w-4xl px-6 text-center md:px-10">
+      <div className="relative mx-auto max-w-4xl px-6 md:px-10">
         <FadeIn>
-          <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-gold)]">
+          <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
             Residents
           </span>
-
-          <div
-            aria-hidden
-            className="mt-12 select-none font-serif text-[140px] leading-none text-[var(--color-gold)]/90 md:text-[180px]"
-            style={{ lineHeight: 0.7 }}
-          >
-            &ldquo;
-          </div>
-
-          <blockquote className="mx-auto mt-6 max-w-3xl">
-            <p
-              key={index}
-              className="fade-in is-visible font-serif text-2xl font-normal leading-[1.4] text-white md:text-3xl"
-              dangerouslySetInnerHTML={{ __html: current.quote }}
-            />
-            <footer className="mt-10">
-              <p className="font-sans text-[11px] uppercase tracking-[0.28em] text-white">
-                {current.name}
-              </p>
-              <p className="mt-2 font-sans text-xs text-white/50">
-                {current.detail}
-              </p>
-            </footer>
-          </blockquote>
-
-          <div className="mt-12 flex items-center justify-center gap-3">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`Testimonial ${i + 1}`}
-                className={`h-px w-8 transition-all duration-300 ${
-                  i === index
-                    ? "bg-[var(--color-gold)]"
-                    : "bg-white/25 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
+          <h2 className="mt-6 max-w-2xl font-display text-5xl font-normal leading-[1.05] text-[var(--color-bg)] md:text-6xl">
+            What it&rsquo;s like to live here.
+          </h2>
         </FadeIn>
+
+        <div className="mt-20 space-y-16 md:space-y-20">
+          {TESTIMONIALS.map((t, i) => (
+            <FadeIn key={t.name} delay={i * 100}>
+              <figure className="relative">
+                <div
+                  aria-hidden
+                  className="select-none font-display text-[140px] leading-none text-[var(--color-terracotta)]/90 md:text-[180px]"
+                  style={{ lineHeight: 0.6 }}
+                >
+                  &ldquo;
+                </div>
+                <blockquote className="mt-2 max-w-3xl">
+                  <p className="font-display text-2xl font-normal italic leading-[1.35] text-[var(--color-bg)] md:text-3xl lg:text-4xl">
+                    {t.quote}
+                  </p>
+                  <figcaption className="mt-10">
+                    <p className="font-body text-[11px] uppercase tracking-[0.3em] text-[var(--color-bg)]">
+                      {t.name}
+                    </p>
+                    <p className="mt-2 font-body text-xs text-[var(--color-bg)]/50">
+                      {t.detail}
+                    </p>
+                  </figcaption>
+                </blockquote>
+
+                {i !== TESTIMONIALS.length - 1 && (
+                  <div className="mt-16 h-px w-full bg-[var(--color-bg)]/10 md:mt-20" />
+                )}
+              </figure>
+            </FadeIn>
+          ))}
+        </div>
       </div>
     </section>
   );

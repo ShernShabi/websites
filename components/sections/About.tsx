@@ -2,66 +2,60 @@ import FadeIn from "@/components/ui/FadeIn";
 
 export default function About() {
   return (
-    <section id="about" className="bg-white py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
-          {/* Copy */}
-          <FadeIn className="lg:col-span-7">
-            <span className="font-sans text-xs uppercase tracking-[0.2em] text-[var(--color-gold)]">
-              The Residence
-            </span>
+    <section id="about" className="bg-[var(--color-bg)] py-20 md:py-28">
+      <div className="mx-auto max-w-5xl px-6 md:px-10">
+        <FadeIn>
+          <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
+            The Residence
+          </span>
+        </FadeIn>
 
-            <h2 className="mt-6 max-w-2xl font-serif text-4xl font-normal leading-[1.1] tracking-tight text-[var(--color-fg)] md:text-5xl">
-              An address defined by proportion, light, and a quiet sense of
-              arrival.
-            </h2>
+        <FadeIn delay={100}>
+          <div className="mt-10 space-y-8 font-body text-lg leading-loose text-[var(--color-fg)]/80">
+            <p>
+              The Linden is a building you come home to the way you come home
+              to a good meal — slowly, hungrily, already a little in love.
+              Sixty-four residences wrap a shaded central courtyard planted
+              with an old olive tree, a fountain that trickles into terracotta
+              tile, and the kind of afternoon shadows that make you forget
+              what day it is.
+            </p>
+            <p>
+              Interiors are a quiet conversation between limewashed plaster,
+              white oak, travertine, and brushed linen. Kitchens turn on
+              arched stone hoods and hand-thrown tile splashbacks; bathrooms
+              lean into honeyed marble and brushed-brass fittings that age the
+              way good objects should. Every residence faces the courtyard or
+              opens onto a private balcony, and every window was placed to
+              catch a specific hour of the California sun.
+            </p>
+          </div>
+        </FadeIn>
 
-            <div className="mt-10 h-px w-16 bg-[var(--color-gold)]" />
+        {/* Oversized pull quote with terracotta left rule */}
+        <FadeIn delay={200}>
+          <figure className="relative my-20 border-l-2 border-[var(--color-terracotta)] pl-8 md:my-28 md:pl-12">
+            <blockquote className="font-display text-3xl font-normal italic leading-[1.2] text-[var(--color-fg)] md:text-4xl lg:text-5xl">
+              &ldquo;A building you come home to the way you come home to a
+              good meal — slowly, hungrily, already a little in love.&rdquo;
+            </blockquote>
+            <figcaption className="mt-8 font-body text-xs uppercase tracking-[0.3em] text-[var(--color-muted)]">
+              Dwell, on The Linden
+            </figcaption>
+          </figure>
+        </FadeIn>
 
-            <div className="mt-10 max-w-xl space-y-6 font-sans text-base leading-relaxed text-neutral-600">
-              <p>
-                Set along one of Manhattan&rsquo;s most storied avenues, The
-                Ellington Residences is a collection of 112 studio, one-,
-                two-bedroom, and penthouse homes conceived for residents who
-                value privacy, proportion, and a daily rhythm of considered
-                service. Interiors are finished in honed marble, quarter-sawn
-                white oak, and solid brass — materials that age gracefully and
-                were selected for the way they hold the light.
-              </p>
-              <p>
-                Every residence is oriented to maximize northern and western
-                exposures, with floor-to-ceiling windows framing the skyline
-                and custom millwork built to sit flush with the architecture.
-                Kitchens are anchored by integrated Gaggenau appliances and
-                waterfall-edge islands; primary baths are clad in book-matched
-                stone and outfitted with radiant floors.
-              </p>
-              <p>
-                Above, the amenity program is deliberately restrained — a
-                rooftop pool and sundeck, a double-height fitness atelier, and
-                a residents&rsquo; lounge with curated programming. Below, a
-                24-hour concierge anticipates the needs of a small community.
-                The result is a building that feels less like a rental and
-                more like a private residence club.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Image placeholder */}
-          <FadeIn className="lg:col-span-5" delay={120}>
-            <div className="relative">
-              <div className="aspect-[3/4] w-full bg-neutral-200">
-                <div className="flex h-full w-full items-center justify-center">
-                  <span className="font-sans text-xs uppercase tracking-[0.28em] text-neutral-400">
-                    Image
-                  </span>
-                </div>
-              </div>
-              {/* Gold rule detail */}
-              <div className="absolute -left-6 top-10 hidden h-16 w-px bg-[var(--color-gold)] md:block" />
-            </div>
-          </FadeIn>
-        </div>
+        <FadeIn delay={120}>
+          <div className="space-y-8 font-body text-lg leading-loose text-[var(--color-fg)]/80">
+            <p>
+              Above the courtyard, the amenity deck unfolds the way a good
+              hotel rooftop does — a long pool flanked by striped umbrellas,
+              an outdoor kitchen shaded by an awning, and a row of daybeds
+              facing the hills. It is the kind of place where you keep
+              meaning to go back upstairs, and keep finding reasons to stay.
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

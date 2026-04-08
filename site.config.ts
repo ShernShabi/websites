@@ -28,19 +28,20 @@ export type FloorPlan = {
 };
 
 export const config = {
-  businessName: "The Ellington Residences",
-  shortName: "The Ellington",
-  tagline: "An address of considered proportion, in the quiet heart of the city.",
+  businessName: "The Linden",
+  shortName: "The Linden",
+  tagline:
+    "A sun-drenched collection of residences, tucked into the shade of West Hollywood's quietest street.",
 
-  email: "leasing@theellingtonresidences.com",
-  phone: "(212) 555-0142",
+  email: "hello@thelindenwh.com",
+  phone: "(323) 555-0148",
 
   address: {
-    line1: "450 Park Avenue",
+    line1: "8422 Fountain Avenue",
     line2: "",
-    city: "New York",
-    state: "NY",
-    zip: "10022",
+    city: "West Hollywood",
+    state: "CA",
+    zip: "90069",
     country: "US",
   },
 
@@ -50,23 +51,25 @@ export const config = {
   ],
 
   /**
-   * Design tokens. These are injected as CSS variables on <body> in
-   * app/layout.tsx. Components read them via `var(--color-*)`.
+   * Design tokens — Warm Modernist palette.
+   * Injected as CSS variables on <body> in app/layout.tsx.
    */
   colors: {
-    bg: "#ffffff",
-    fg: "#0a0a0a",
-    dark: "#1a1a2e",
-    muted: "#737373",
-    line: "#e5e5e5",
-    gold: "#c9a961",
-    goldDeep: "#a88944",
+    bg: "#f7f3ee", // creamy warm off-white
+    fg: "#2c2926", // warm dark brown for text on light
+    dark: "#2c2926", // warm dark brown for dark sections
+    charcoal: "#3d3a38", // warm charcoal primary
+    terracotta: "#c67d5b", // clay accent
+    terracottaDeep: "#a8613f",
+    sage: "#8a9a7b", // secondary accent
+    muted: "#7a716a", // warm muted
+    line: "#e8e0d4", // warm hairline on light bg
   },
 
   /**
    * Order of sections rendered by the homepage (app/page.tsx).
    * Reorder freely — the homepage reads this list and renders each
-   * component in order. No re-deploy-to-reorder.
+   * component in order.
    */
   homeSections: [
     "hero",
@@ -83,51 +86,51 @@ export const config = {
     {
       slug: "studio",
       name: "Studio",
-      startingPrice: "$2,200",
-      squareFootage: "450 – 550 sq ft",
+      startingPrice: "$2,400",
+      squareFootage: "480 – 560 sq ft",
       bedrooms: 0,
       bathrooms: 1,
       description:
-        "A compact, light-filled residence with floor-to-ceiling windows, integrated kitchen, and custom millwork throughout.",
+        "A bright, open layout with a built-in banquette nook, limewashed walls, and a Juliet balcony framing a lemon tree in the courtyard below.",
     },
     {
       slug: "one-bedroom",
       name: "One Bedroom",
-      startingPrice: "$2,800",
-      squareFootage: "650 – 800 sq ft",
+      startingPrice: "$3,200",
+      squareFootage: "720 – 860 sq ft",
       bedrooms: 1,
       bathrooms: 1,
       description:
-        "A generous layout with a separated sleeping quarter, oak flooring, and a spa-inspired bath clad in honed marble.",
+        "A generous living room that opens onto a private terrace, white oak floors warmed by afternoon sun, and a softly curved kitchen island in travertine.",
     },
     {
       slug: "two-bedroom",
       name: "Two Bedroom",
-      startingPrice: "$3,800",
-      squareFootage: "1,000 – 1,200 sq ft",
+      startingPrice: "$4,500",
+      squareFootage: "1,100 – 1,280 sq ft",
       bedrooms: 2,
       bathrooms: 2,
       description:
-        "Split-bedroom planning, a chef's kitchen anchored by a waterfall island, and a private terrace on select lines.",
+        "A split-plan home with an open great room, arched doorways, and a sunken seating area that feels lifted from a Tulum hillside villa.",
     },
     {
       slug: "penthouse",
       name: "Penthouse",
-      startingPrice: "$6,500",
-      squareFootage: "1,800+ sq ft",
+      startingPrice: "$8,000",
+      squareFootage: "1,850+ sq ft",
       bedrooms: 3,
       bathrooms: 3,
       description:
-        "A crowning collection of residences with double-height ceilings, wrap terraces, and uninterrupted skyline views.",
+        "A crown of three residences with wrap terraces, a plunge pool, outdoor shower, and an olive tree planted in a limestone-clad courtyard under the California sky.",
     },
   ] as FloorPlan[],
 
   seo: {
-    titleTemplate: "%s | The Ellington Residences",
-    defaultTitle: "The Ellington Residences — Luxury Apartments on Park Avenue",
+    titleTemplate: "%s | The Linden",
+    defaultTitle: "The Linden — Warm Modernist Residences in West Hollywood",
     description:
-      "The Ellington Residences is a collection of thoughtfully designed studio, one-, two-bedroom, and penthouse apartments on Park Avenue, offering resort-style amenities, full-service concierge, and a refined Midtown address.",
-    siteUrl: "https://www.theellingtonresidences.com",
+      "The Linden is a collection of 64 studio, one-, two-bedroom, and penthouse residences in West Hollywood, designed around warmth, sunlight, and the rituals of California living.",
+    siteUrl: "https://www.thelindenwh.com",
     ogImage: "/og.jpg",
     locale: "en_US",
   },
