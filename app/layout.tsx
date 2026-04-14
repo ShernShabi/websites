@@ -38,22 +38,20 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const { colors } = config;
-  // Warm Modernist design tokens. Exposed to every component as CSS vars.
-  const bodyStyle = {
-    "--color-bg": colors.bg,
-    "--color-fg": colors.fg,
-    "--color-dark": colors.dark,
-    "--color-charcoal": colors.charcoal,
-    "--color-terracotta": colors.terracotta,
-    "--color-terracotta-deep": colors.terracottaDeep,
-    "--color-sage": colors.sage,
-    "--color-muted": colors.muted,
-    "--color-line": colors.line,
-  } as React.CSSProperties;
+  // Warm Modernist design tokens, emitted as a static `:root` block.
+  // We write these through a dedicated <style> tag rather than the body's
+  // `style` prop because React 19 serializes custom-property style objects
+  // inconsistently between server and client, which causes a hydration
+  // mismatch that can cancel className application. Raw CSS text is
+  // byte-identical on both sides and hydrates cleanly.
+  const tokensCss = `:root{--color-bg:${colors.bg};--color-fg:${colors.fg};--color-dark:${colors.dark};--color-charcoal:${colors.charcoal};--color-terracotta:${colors.terracotta};--color-terracotta-deep:${colors.terracottaDeep};--color-sage:${colors.sage};--color-muted:${colors.muted};--color-line:${colors.line};}`;
 
   return (
     <html lang="en" className="h-full">
-      <body style={bodyStyle} className="flex min-h-full flex-col">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: tokensCss }} />
+      </head>
+      <body className="flex min-h-full flex-col">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -22,9 +22,13 @@ any component.
 
 ## 1. Color System
 
-All colors live in `site.config.ts` under `config.colors` and are injected
-as CSS variables on the `<body>` element in `app/layout.tsx`. **Never**
-hardcode a hex value in a component — always use `var(--color-*)`.
+All colors live in `site.config.ts` under `config.colors`. The root
+layout emits them as a static `:root { --color-*: ... }` block through a
+`<style>` tag in `<head>` (not via a `style` prop on `<body>` — React 19
+serializes custom-property style objects inconsistently between server
+and client, which causes a hydration mismatch and can cancel className
+application). **Never** hardcode a hex value in a component — always
+use `var(--color-*)`.
 
 | Token                       | Hex       | Purpose                                                  |
 | --------------------------- | --------- | -------------------------------------------------------- |
