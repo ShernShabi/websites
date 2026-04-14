@@ -1,31 +1,8 @@
+import Link from "next/link";
 import FadeIn from "@/components/ui/FadeIn";
+import { config, type GalleryTile } from "@/site.config";
 
-/**
- * Pinterest / editorial-style gallery. Each tile has a hand-chosen aspect
- * ratio and column span, arranged in a 4-column grid on desktop. Tiles
- * intentionally don't line up in perfect rows.
- */
-
-type Tile = {
-  aspect: "square" | "tall" | "xtall" | "wide" | "panorama";
-  tone: "warm" | "sage" | "clay" | "shadow";
-  span?: "single" | "double";
-};
-
-const TILES: Tile[] = [
-  { aspect: "tall", tone: "warm", span: "single" },
-  { aspect: "square", tone: "clay", span: "single" },
-  { aspect: "wide", tone: "sage", span: "double" },
-  { aspect: "xtall", tone: "shadow", span: "single" },
-  { aspect: "square", tone: "warm", span: "single" },
-  { aspect: "tall", tone: "clay", span: "single" },
-  { aspect: "square", tone: "sage", span: "single" },
-  { aspect: "wide", tone: "warm", span: "double" },
-  { aspect: "tall", tone: "shadow", span: "single" },
-  { aspect: "square", tone: "clay", span: "single" },
-];
-
-function aspectClass(a: Tile["aspect"]) {
+function aspectClass(a: GalleryTile["aspect"]) {
   switch (a) {
     case "tall":
       return "aspect-[3/4]";
@@ -33,14 +10,12 @@ function aspectClass(a: Tile["aspect"]) {
       return "aspect-[2/3]";
     case "wide":
       return "aspect-[4/3]";
-    case "panorama":
-      return "aspect-[16/9]";
     default:
       return "aspect-square";
   }
 }
 
-function toneClass(t: Tile["tone"]) {
+function toneClass(t: GalleryTile["tone"]) {
   switch (t) {
     case "sage":
       return "bg-gradient-to-br from-[#c6cfb4] via-[#a8b594] to-[#7f8f6d]";
@@ -53,42 +28,47 @@ function toneClass(t: Tile["tone"]) {
   }
 }
 
+/**
+ * Homepage gallery preview — shows the first 6 tiles in a 3-column
+ * masonry-ish grid. The full /gallery page carries the whole spread.
+ */
 export default function Gallery() {
+  const tiles = config.galleryTiles.slice(0, 6);
+
   return (
     <section id="gallery" className="bg-[var(--color-bg)] py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <FadeIn>
-          <div className="max-w-3xl">
-            <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
-              Gallery
-            </span>
-            <h2 className="mt-6 font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-6xl">
-              Scenes from the courtyard.
-            </h2>
-            <p className="mt-8 font-body text-lg leading-loose text-[var(--color-fg)]/70">
-              Interiors, common spaces, and the slow California light that
-              moves through the building from morning to evening.
-            </p>
+          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+            <div className="max-w-3xl">
+              <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
+                {config.galleryEyebrow}
+              </span>
+              <h2 className="mt-6 font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-6xl">
+                {config.galleryHeadline}
+              </h2>
+              <p className="mt-8 font-body text-lg leading-loose text-[var(--color-fg)]/70">
+                {config.galleryBody}
+              </p>
+            </div>
+            <Link
+              href="/gallery"
+              className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)] transition-all duration-300 hover:translate-x-1"
+            >
+              Full gallery &rarr;
+            </Link>
           </div>
         </FadeIn>
 
-        <div className="mt-16 grid grid-cols-2 gap-4 md:mt-20 md:grid-cols-4 md:gap-6">
-          {TILES.map((tile, i) => (
+        <div className="mt-16 grid grid-cols-2 gap-4 md:mt-20 md:grid-cols-3 md:gap-6">
+          {tiles.map((tile, i) => (
             <FadeIn
               key={i}
-              delay={(i % 4) * 80}
-              className={
-                tile.span === "double"
-                  ? "col-span-2"
-                  : i === 3
-                    ? "row-span-2"
-                    : ""
-              }
+              delay={(i % 3) * 80}
+              className={tile.span === "double" ? "col-span-2" : ""}
             >
               <figure
-                className={`group relative h-full w-full overflow-hidden rounded-2xl shadow-lg transition-transform duration-500 hover:scale-[1.02] ${aspectClass(
-                  tile.aspect
-                )} ${toneClass(tile.tone)}`}
+                className={`group relative h-full w-full overflow-hidden rounded-2xl shadow-lg transition-transform duration-500 hover:scale-[1.02] ${aspectClass(tile.aspect)} ${toneClass(tile.tone)}`}
               >
                 <div className="grain" aria-hidden />
                 <div className="relative flex h-full w-full items-center justify-center">
@@ -102,6 +82,11 @@ export default function Gallery() {
                     Photo
                   </span>
                 </div>
+                {tile.caption && (
+                  <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/40 to-transparent p-4 font-body text-[10px] uppercase tracking-[0.3em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    {tile.caption}
+                  </figcaption>
+                )}
               </figure>
             </FadeIn>
           ))}

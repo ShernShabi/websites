@@ -1,48 +1,34 @@
 import FadeIn from "@/components/ui/FadeIn";
-
-const NEARBY = [
-  {
-    label: "Dining",
-    items: ["Gjelina (2 min)", "Jon & Vinny's (5 min)", "Carthay Ct. (6 min)"],
-  },
-  {
-    label: "Coffee",
-    items: ["Verve (3 min)", "Go Get Em Tiger (4 min)", "Maru (7 min)"],
-  },
-  {
-    label: "Green",
-    items: ["Runyon Canyon (8 min)", "Plummer Park (4 min)", "Holloway Trail (6 min)"],
-  },
-];
+import { config } from "@/site.config";
 
 export default function Neighborhood() {
   return (
-    <section id="neighborhood" className="bg-[var(--color-bg)] py-20 md:py-28">
+    <section
+      id="neighborhood"
+      className="bg-[var(--color-bg)] py-20 md:py-28"
+    >
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <FadeIn>
           <div className="max-w-3xl">
             <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
-              The Neighborhood
+              {config.neighborhoodEyebrow}
             </span>
             <h2 className="mt-6 font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-6xl">
-              On Fountain, between two of LA&rsquo;s best mornings.
+              {config.neighborhoodHeadline}
             </h2>
             <p className="mt-8 max-w-2xl font-body text-lg leading-loose text-[var(--color-fg)]/70">
-              Step out the front door and you&rsquo;re six minutes from a
-              great loaf of bread, eight from the trail up Runyon, and ten
-              from the quiet end of Melrose. West Hollywood is a walking
-              neighborhood — The Linden sits on the best block of it.
+              {config.neighborhoodBody}
             </p>
           </div>
         </FadeIn>
 
         <div className="relative mt-16 md:mt-20">
-          {/* Large map area — 70% width on desktop, full on mobile */}
+          {/* Large map area */}
           <FadeIn delay={100}>
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-xl md:aspect-[16/9] md:w-[70%]">
               <div className="relative h-full w-full bg-gradient-to-br from-[#c6cfb4] via-[#a8b594] to-[#6e7f5e]">
                 <div className="grain" aria-hidden />
-                {/* Fake "pin" */}
+                {/* Pin */}
                 <div
                   aria-hidden
                   className="absolute left-[38%] top-[44%] h-6 w-6 -translate-x-1/2 -translate-y-full"
@@ -59,7 +45,7 @@ export default function Neighborhood() {
             </div>
           </FadeIn>
 
-          {/* Floating info cards — overlap the map */}
+          {/* Floating info cards */}
           <FadeIn delay={240}>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:absolute md:right-0 md:top-10 md:mt-0 md:w-[42%] md:grid-cols-1 md:gap-5 lg:top-16">
               <div className="rounded-2xl bg-[var(--color-bg)] p-6 shadow-xl ring-1 ring-[var(--color-line)] md:p-8">
@@ -69,7 +55,7 @@ export default function Neighborhood() {
                 <div className="mt-4 flex items-baseline gap-6">
                   <div>
                     <p className="font-display text-5xl leading-none text-[var(--color-fg)]">
-                      96
+                      {config.walkScore}
                     </p>
                     <p className="mt-2 font-body text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
                       Walk Score
@@ -77,7 +63,7 @@ export default function Neighborhood() {
                   </div>
                   <div>
                     <p className="font-display text-5xl leading-none text-[var(--color-fg)]">
-                      82
+                      {config.transitScore}
                     </p>
                     <p className="mt-2 font-body text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
                       Transit
@@ -91,7 +77,7 @@ export default function Neighborhood() {
                   Nearby
                 </span>
                 <ul className="mt-5 space-y-4">
-                  {NEARBY.map((group) => (
+                  {config.neighborhoodNearby.map((group) => (
                     <li key={group.label}>
                       <p className="font-body text-[10px] uppercase tracking-[0.22em] text-[var(--color-bg)]/50">
                         {group.label}

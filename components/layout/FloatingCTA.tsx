@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 /**
- * Mobile-only floating "Schedule a Tour" button. Fades in after the user
- * has scrolled past the hero so it never overlaps the hero CTAs. Hidden
- * on the /contact route — redundant there.
+ * Mobile-only floating "Schedule a Tour" button. Fades in after the
+ * user has scrolled past the hero so it never overlaps the hero CTAs.
+ * Hidden on /contact — redundant there. Uses `usePathname()` so it
+ * reacts to client-side navigation.
  */
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 600);
@@ -19,17 +21,7 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const checkPath = () => {
-      if (typeof window === "undefined") return;
-      setHidden(window.location.pathname.startsWith("/contact"));
-    };
-    checkPath();
-    window.addEventListener("popstate", checkPath);
-    return () => window.removeEventListener("popstate", checkPath);
-  }, []);
-
-  if (hidden) return null;
+  if (pathname?.startsWith("/contact")) return null;
 
   return (
     <Link

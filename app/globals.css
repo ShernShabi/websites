@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* Font families set here so the whole app can reference them by variable.
-     The actual @font-face rules ship via @fontsource{-variable}/* imported
-     in app/layout.tsx. */
+  /* Font families resolved via @fontsource{-variable}/* imports in
+     app/layout.tsx. Exposed as CSS variables so every component can
+     reference them through the `font-display` / `font-body` helpers. */
   --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
   --font-serif: "DM Serif Display", "Cormorant Garamond", Georgia,
@@ -44,8 +44,9 @@ body {
   color: var(--color-bg);
 }
 
-/* Subtle noise/grain overlay — used on hero & dark warm sections.
-   Inline SVG dot pattern at ~3% opacity. */
+/* ---------- Grain overlay ----------
+   Subtle fractal-noise grain used on dark sections and on warm
+   gradient placeholder panels. ~3.5% opacity. */
 .grain::before {
   content: "";
   position: absolute;
@@ -53,15 +54,18 @@ body {
   pointer-events: none;
   opacity: 0.035;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size: 240px 240px;
 }
 
-/* Fade-in on scroll — consumed by <FadeIn /> */
+/* ---------- Fade-in on scroll ----------
+   Consumed by <FadeIn />. 900ms ease-out, translateY(28px) → 0. */
 .fade-in {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 900ms ease-out, transform 900ms ease-out;
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .fade-in.is-visible {
@@ -81,7 +85,7 @@ body {
   }
 }
 
-/* Horizontal scroll shell used by the FloorPlans rail */
+/* ---------- Scroll rails ---------- */
 .scroll-rail {
   scrollbar-width: thin;
   scrollbar-color: var(--color-terracotta) transparent;
@@ -100,7 +104,6 @@ body {
   background: var(--color-terracotta);
 }
 
-/* Hide native scrollbar where we want pure drag/flow */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -109,7 +112,7 @@ body {
   scrollbar-width: none;
 }
 
-/* Scroll indicator bob — Hero */
+/* ---------- Scroll indicator bob ---------- */
 @keyframes scroll-bob {
   0%,
   100% {

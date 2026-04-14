@@ -22,16 +22,14 @@ export default function ContactPage() {
           <FadeIn>
             <div className="text-center">
               <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
-                Get in Touch
+                {config.contactEyebrow}
               </span>
               <h1 className="mt-6 font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-6xl">
-                Come visit.
+                {config.contactHeadline}
               </h1>
               <div className="mx-auto mt-8 h-px w-16 bg-[var(--color-terracotta)]" />
               <p className="mx-auto mt-8 max-w-md font-body text-lg leading-loose text-[var(--color-fg)]/70">
-                Every inquiry is answered personally by a member of our
-                leasing team. Share a few details and we&rsquo;ll be in touch
-                within 24 hours.
+                {config.contactBody}
               </p>
             </div>
           </FadeIn>
@@ -59,7 +57,7 @@ export default function ContactPage() {
                 </p>
                 <a
                   href={`mailto:${config.email}`}
-                  className="mt-3 inline-block font-body text-sm text-[var(--color-fg)]/80 hover:text-[var(--color-terracotta)]"
+                  className="mt-3 inline-block font-body text-sm text-[var(--color-fg)]/80 transition-colors duration-300 hover:text-[var(--color-terracotta)]"
                 >
                   {config.email}
                 </a>
@@ -68,17 +66,17 @@ export default function ContactPage() {
                 <p className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
                   Hours
                 </p>
-                <p className="mt-3 font-body text-sm leading-relaxed text-[var(--color-fg)]/80">
+                <div className="mt-3 space-y-1 font-body text-sm leading-relaxed text-[var(--color-fg)]/80">
                   {config.leasingHours.map((row) => (
-                    <span key={row.days} className="block">
+                    <p key={row.days}>
                       {row.days}
                       <br />
                       <span className="text-[var(--color-muted)]">
                         {row.hours}
                       </span>
-                    </span>
+                    </p>
                   ))}
-                </p>
+                </div>
               </div>
             </div>
           </FadeIn>

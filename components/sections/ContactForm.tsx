@@ -5,14 +5,11 @@ import { config } from "@/site.config";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const FLOOR_PLAN_OPTIONS = [
-  { value: "", label: "Select a residence" },
-  { value: "Studio", label: "Studio" },
-  { value: "One Bedroom", label: "One Bedroom" },
-  { value: "Two Bedroom", label: "Two Bedroom" },
-  { value: "Penthouse", label: "Penthouse" },
-];
-
+/**
+ * Contact form, consumed by /contact. Posts to /api/contact and shows a
+ * success or error state in place. Includes a hidden honeypot field.
+ * Residence dropdown is populated from site.config.ts.
+ */
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +30,6 @@ export default function ContactForm() {
       });
 
       const data = (await res.json().catch(() => ({}))) as { error?: string };
-
       if (!res.ok) {
         throw new Error(data.error ?? "Something went wrong.");
       }
@@ -58,7 +54,7 @@ export default function ContactForm() {
         <div className="mx-auto mt-6 h-px w-12 bg-[var(--color-terracotta)]" />
         <p className="mx-auto mt-8 max-w-md font-body text-lg leading-loose text-[var(--color-fg)]/70">
           Our leasing team will be in touch within 24 hours to arrange a
-          private walk-through of The Linden.
+          private walk-through of {config.businessName}.
         </p>
       </div>
     );
@@ -87,7 +83,11 @@ export default function ContactForm() {
         <Field label="Full Name" name="name" required />
         <Field label="Email" name="email" type="email" required />
         <Field label="Phone" name="phone" type="tel" />
-        <Field label="Desired Move-In" name="moveInDate" placeholder="MM/YYYY" />
+        <Field
+          label="Desired Move-In"
+          name="moveInDate"
+          placeholder="MM / YYYY"
+        />
 
         <div>
           <label
@@ -100,11 +100,12 @@ export default function ContactForm() {
             id="floorPlan"
             name="floorPlan"
             defaultValue=""
-            className="mt-3 w-full rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
+            className="mt-3 w-full rounded-2xl border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
           >
-            {FLOOR_PLAN_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
+            <option value="">Select a residence</option>
+            {config.floorPlans.map((plan) => (
+              <option key={plan.slug} value={plan.name}>
+                {plan.name}
               </option>
             ))}
           </select>
@@ -115,15 +116,16 @@ export default function ContactForm() {
             htmlFor="message"
             className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]"
           >
-            Message<span className="ml-1 text-[var(--color-terracotta)]">*</span>
+            Message
+            <span className="ml-1 text-[var(--color-terracotta)]">*</span>
           </label>
           <textarea
             id="message"
             name="message"
             required
             rows={5}
-            className="mt-3 w-full resize-none rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
-            placeholder="Tell us what you&rsquo;re looking for — a sunny courtyard-side studio, a penthouse with a plunge pool, or something in between."
+            placeholder="Tell us what you're looking for — a sunny courtyard-side studio, a penthouse with a plunge pool, or something in between."
+            className="mt-3 w-full resize-none rounded-2xl border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
           />
         </div>
       </div>
@@ -137,7 +139,7 @@ export default function ContactForm() {
       </button>
 
       {status === "error" && (
-        <div className="mt-6 rounded-lg bg-[var(--color-terracotta)]/10 p-5">
+        <div className="mt-6 rounded-2xl bg-[var(--color-terracotta)]/10 p-5">
           <p className="font-body text-sm text-[var(--color-terracotta-deep)]">
             {error ?? "We couldn't submit your inquiry."}
           </p>
@@ -192,7 +194,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="mt-3 w-full rounded-lg border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
+        className="mt-3 w-full rounded-2xl border border-[var(--color-line)] bg-white px-5 py-4 font-body text-base text-[var(--color-fg)] shadow-sm placeholder:text-[var(--color-muted)]/70 transition-colors duration-300 focus:border-[var(--color-terracotta)] focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta)]/20"
       />
     </div>
   );

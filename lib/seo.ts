@@ -1,6 +1,6 @@
 /**
  * SEO helpers — builds JSON-LD structured data and a `Metadata` object
- * seeded from `site.config.ts` so every page can share one source of truth.
+ * seeded from `site.config.ts` so every page shares one source of truth.
  */
 import type { Metadata } from "next";
 import { config } from "@/site.config";
@@ -9,12 +9,13 @@ export function buildMetadata(
   title: string,
   description?: string
 ): Metadata {
+  const desc = description ?? config.seo.description;
   return {
     title,
-    description: description ?? config.seo.description,
+    description: desc,
     openGraph: {
       title,
-      description: description ?? config.seo.description,
+      description: desc,
       url: config.seo.siteUrl,
       siteName: config.businessName,
       images: [{ url: config.seo.ogImage }],
@@ -24,7 +25,7 @@ export function buildMetadata(
     twitter: {
       card: "summary_large_image",
       title,
-      description: description ?? config.seo.description,
+      description: desc,
       images: [config.seo.ogImage],
     },
     alternates: {
@@ -34,8 +35,9 @@ export function buildMetadata(
 }
 
 /**
- * Generates ApartmentComplex JSON-LD structured data.
- * Injected once in the root layout.
+ * ApartmentComplex JSON-LD structured data. Injected once in the root
+ * layout. Amenities and offers are read from site.config.ts — nothing
+ * is hardcoded here.
  */
 export function apartmentComplexJsonLd() {
   return {
@@ -55,18 +57,9 @@ export function apartmentComplexJsonLd() {
       addressCountry: config.address.country,
     },
     numberOfAccommodationUnits: config.floorPlans.length,
-    amenityFeature: [
-      "Rooftop Pool & Sundeck",
-      "State-of-the-Art Fitness Center",
-      "Co-Working Lounge",
-      "24-Hour Concierge",
-      "Pet Spa & Dog Park",
-      "Private Parking Garage",
-      "Outdoor Kitchen & Fire Pits",
-      "Smart Home Technology",
-    ].map((name) => ({
+    amenityFeature: config.amenities.map((amenity) => ({
       "@type": "LocationFeatureSpecification",
-      name,
+      name: amenity.title,
       value: true,
     })),
     makesOffer: config.floorPlans.map((plan) => ({

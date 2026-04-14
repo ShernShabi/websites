@@ -27,14 +27,19 @@ export const metadata: Metadata = {
     locale: config.seo.locale,
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: config.seo.defaultTitle,
+    description: config.seo.description,
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const { colors } = config;
+  // Warm Modernist design tokens. Exposed to every component as CSS vars.
   const bodyStyle = {
-    // Warm Modernist design tokens. Exposed to every component.
     "--color-bg": colors.bg,
     "--color-fg": colors.fg,
     "--color-dark": colors.dark,

@@ -8,11 +8,11 @@ type FadeInProps = {
   /** Delay in ms before the fade begins after entering the viewport. */
   delay?: number;
   /** Element tag — defaults to a plain div. */
-  as?: "div" | "section" | "article" | "header" | "footer";
+  as?: "div" | "section" | "article" | "header" | "footer" | "figure" | "li";
 };
 
 /**
- * Fades its children up from `translateY(24px)` to 0 when it enters the
+ * Fades its children up from `translateY(28px)` to 0 when it enters the
  * viewport. One-shot — never re-animates after the first reveal. Respects
  * `prefers-reduced-motion` via the .fade-in class in globals.css.
  */
@@ -22,14 +22,13 @@ export default function FadeIn({
   delay = 0,
   as: Tag = "div",
 }: FadeInProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    // Modern browsers all ship IntersectionObserver; no fallback needed.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -46,10 +45,15 @@ export default function FadeIn({
     return () => observer.disconnect();
   }, []);
 
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
+
   return (
     <Tag
-      ref={ref as React.RefObject<HTMLDivElement>}
-      className={`fade-in ${visible ? "is-visible" : ""} ${className}`}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={setRef as any}
+      className={`fade-in ${visible ? "is-visible" : ""} ${className}`.trim()}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

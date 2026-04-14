@@ -15,10 +15,21 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-[var(--color-dark)] text-[var(--color-bg)]">
       <div className="grain" aria-hidden />
+
+      {/* Soft terracotta glow, bottom-right */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-40 -bottom-40 h-[480px] w-[480px] rounded-full opacity-10 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, var(--color-terracotta) 0%, transparent 60%)",
+        }}
+      />
+
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-24">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div>
             <Link
               href="/"
               className="font-display text-4xl leading-none tracking-tight text-[var(--color-bg)]"
@@ -27,8 +38,7 @@ export default function Footer() {
             </Link>
             <div className="mt-6 h-px w-16 bg-[var(--color-terracotta)]" />
             <p className="mt-6 max-w-xs font-body text-sm leading-loose text-[var(--color-bg)]/60">
-              A collection of residences in West Hollywood, designed around
-              warmth, sunlight, and the rituals of California living.
+              {config.tagline}
             </p>
           </div>
 
@@ -78,7 +88,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Visit */}
           <div>
             <h4 className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
               Visit
@@ -87,7 +97,8 @@ export default function Footer() {
               <p>
                 {config.address.line1}
                 <br />
-                {config.address.city}, {config.address.state} {config.address.zip}
+                {config.address.city}, {config.address.state}{" "}
+                {config.address.zip}
               </p>
               <p>
                 <a
@@ -105,6 +116,16 @@ export default function Footer() {
                   {config.phone}
                 </a>
               </p>
+              <div className="pt-2">
+                {config.leasingHours.map((row) => (
+                  <p
+                    key={row.days}
+                    className="text-xs text-[var(--color-bg)]/50"
+                  >
+                    {row.days} · {row.hours}
+                  </p>
+                ))}
+              </div>
             </address>
           </div>
         </div>

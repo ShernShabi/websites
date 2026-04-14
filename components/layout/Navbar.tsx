@@ -13,6 +13,11 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
+/**
+ * Fixed navbar. Transparent on top of the hero and turns into a cream
+ * frosted bar after the user scrolls past ~32px. Hamburger drawer below
+ * `lg` (1024px). Closes on route change.
+ */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,21 +29,24 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll while the drawer is open.
   useEffect(() => {
     if (!mobileOpen) return;
-    const close = () => setMobileOpen(false);
-    window.addEventListener("hashchange", close);
-    return () => window.removeEventListener("hashchange", close);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [mobileOpen]);
 
-  const onWarm = !scrolled && !mobileOpen;
+  const solid = scrolled || mobileOpen;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        onWarm
-          ? "bg-transparent"
-          : "bg-[var(--color-bg)]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(44,41,38,0.06)]"
+        solid
+          ? "bg-[var(--color-bg)]/90 shadow-[0_1px_0_0_rgba(44,41,38,0.06)] backdrop-blur-md"
+          : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
@@ -49,7 +57,10 @@ export default function Navbar() {
           {config.shortName}
         </Link>
 
-        <nav className="hidden items-center gap-10 lg:flex">
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-10 lg:flex"
+        >
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -73,6 +84,7 @@ export default function Navbar() {
             type="button"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
+            aria-controls="mobile-drawer"
             onClick={() => setMobileOpen((v) => !v)}
             className="inline-flex h-10 w-10 items-center justify-center text-[var(--color-fg)] lg:hidden"
           >
@@ -100,17 +112,23 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       <div
+        id="mobile-drawer"
         className={`overflow-hidden bg-[var(--color-bg)] transition-[max-height] duration-500 lg:hidden ${
-          mobileOpen ? "max-h-[560px] border-t border-[var(--color-line)]" : "max-h-0"
+          mobileOpen
+            ? "max-h-[620px] border-t border-[var(--color-line)]"
+            : "max-h-0"
         }`}
       >
-        <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-6">
+        <nav
+          aria-label="Mobile"
+          className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-6"
+        >
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="border-b border-[var(--color-line)] py-4 font-body text-base text-[var(--color-fg)]"
+              className="border-b border-[var(--color-line)] py-4 font-body text-base text-[var(--color-fg)] transition-colors duration-300 hover:text-[var(--color-terracotta)]"
             >
               {link.label}
             </Link>

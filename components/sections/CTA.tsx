@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FadeIn from "@/components/ui/FadeIn";
+import { config } from "@/site.config";
 
 export default function CTA() {
   return (
@@ -12,15 +13,13 @@ export default function CTA() {
               <div className="grain" aria-hidden />
               <div className="relative">
                 <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
-                  Private Tour
+                  {config.ctaEyebrow}
                 </span>
                 <h2 className="mt-6 max-w-xl font-display text-4xl font-normal leading-[1.05] text-[var(--color-bg)] md:text-5xl lg:text-6xl">
-                  Come see the light for yourself.
+                  {config.ctaHeadline}
                 </h2>
                 <p className="mt-8 max-w-md font-body text-lg leading-loose text-[var(--color-bg)]/70">
-                  The best way to understand The Linden is to walk the
-                  courtyard at four o&rsquo;clock on a Thursday. Our leasing
-                  team will meet you at the gate.
+                  {config.ctaBody}
                 </p>
               </div>
             </div>
@@ -33,14 +32,13 @@ export default function CTA() {
                   No pressure, no script
                 </p>
                 <p className="mt-6 max-w-xs font-display text-2xl font-normal italic leading-snug text-[var(--color-bg)] md:text-3xl">
-                  &ldquo;Just come for the courtyard and stay for the
-                  coffee.&rdquo;
+                  &ldquo;{config.ctaPullquote}&rdquo;
                 </p>
                 <Link
                   href="/contact"
                   className="mt-10 inline-flex items-center justify-center rounded-full bg-[var(--color-bg)] px-10 py-4 font-body text-sm text-[var(--color-fg)] shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-white"
                 >
-                  Book a Tour
+                  {config.ctaButton}
                 </Link>
               </div>
             </div>

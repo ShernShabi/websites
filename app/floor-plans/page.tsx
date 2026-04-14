@@ -7,7 +7,7 @@ import { config } from "@/site.config";
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata(
     "Floor Plans",
-    `Studio, one-bedroom, two-bedroom, and penthouse residences at ${config.businessName}.`
+    `Studio, one-, two-bedroom, and penthouse residences at ${config.businessName}.`
   );
 }
 
@@ -21,6 +21,7 @@ const TONE_BY_INDEX = [
 export default function FloorPlansPage() {
   return (
     <>
+      {/* Spacer under the fixed navbar */}
       <div className="h-24 bg-[var(--color-bg)] md:h-32" />
 
       <section className="bg-[var(--color-bg)] pb-16 md:pb-24">
@@ -29,7 +30,7 @@ export default function FloorPlansPage() {
             <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
               Residences
             </span>
-            <h1 className="mt-6 max-w-4xl font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-8xl">
+            <h1 className="mt-6 max-w-4xl font-display text-5xl font-normal leading-[1.05] text-[var(--color-fg)] md:text-7xl">
               Four ways to live here.
             </h1>
             <div className="mt-10 h-px w-16 bg-[var(--color-terracotta)]" />
@@ -60,7 +61,7 @@ export default function FloorPlansPage() {
                 >
                   {/* Image */}
                   <div
-                    className={`relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:col-span-6 ${
+                    className={`relative aspect-[4/3] overflow-hidden lg:col-span-6 lg:aspect-auto ${
                       reverse ? "lg:order-2" : ""
                     }`}
                   >
@@ -71,8 +72,8 @@ export default function FloorPlansPage() {
                       <div className="relative flex h-full w-full items-center justify-center">
                         <span
                           className={`font-body text-xs uppercase tracking-[0.3em] ${
-                            i === 3
-                              ? "text-[var(--color-bg)]/40"
+                            i === TONE_BY_INDEX.length - 1
+                              ? "text-[var(--color-bg)]/50"
                               : "text-[var(--color-dark)]/40"
                           }`}
                         >
@@ -84,18 +85,14 @@ export default function FloorPlansPage() {
 
                   {/* Body */}
                   <div className="flex flex-col justify-center p-10 md:p-14 lg:col-span-6 lg:p-20">
-                    <span
-                      className={`font-body text-xs uppercase tracking-[0.3em] ${
-                        isDark
-                          ? "text-[var(--color-terracotta)]"
-                          : "text-[var(--color-terracotta)]"
-                      }`}
-                    >
+                    <span className="font-body text-xs uppercase tracking-[0.3em] text-[var(--color-terracotta)]">
                       {plan.squareFootage}
                     </span>
                     <h2
                       className={`mt-4 font-display text-4xl font-normal leading-tight md:text-6xl ${
-                        isDark ? "text-[var(--color-bg)]" : "text-[var(--color-fg)]"
+                        isDark
+                          ? "text-[var(--color-bg)]"
+                          : "text-[var(--color-fg)]"
                       }`}
                     >
                       {plan.name}
@@ -119,60 +116,24 @@ export default function FloorPlansPage() {
                           : "border-[var(--color-line)]"
                       }`}
                     >
-                      <div>
-                        <dt
-                          className={`font-body text-[10px] uppercase tracking-[0.22em] ${
-                            isDark
-                              ? "text-[var(--color-bg)]/50"
-                              : "text-[var(--color-muted)]"
-                          }`}
-                        >
-                          Bedrooms
-                        </dt>
-                        <dd
-                          className={`mt-2 font-display text-3xl ${
-                            isDark
-                              ? "text-[var(--color-bg)]"
-                              : "text-[var(--color-fg)]"
-                          }`}
-                        >
-                          {plan.bedrooms === 0 ? "Studio" : plan.bedrooms}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt
-                          className={`font-body text-[10px] uppercase tracking-[0.22em] ${
-                            isDark
-                              ? "text-[var(--color-bg)]/50"
-                              : "text-[var(--color-muted)]"
-                          }`}
-                        >
-                          Baths
-                        </dt>
-                        <dd
-                          className={`mt-2 font-display text-3xl ${
-                            isDark
-                              ? "text-[var(--color-bg)]"
-                              : "text-[var(--color-fg)]"
-                          }`}
-                        >
-                          {plan.bathrooms}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt
-                          className={`font-body text-[10px] uppercase tracking-[0.22em] ${
-                            isDark
-                              ? "text-[var(--color-bg)]/50"
-                              : "text-[var(--color-muted)]"
-                          }`}
-                        >
-                          From
-                        </dt>
-                        <dd className="mt-2 font-display text-3xl text-[var(--color-terracotta)]">
-                          {plan.startingPrice}
-                        </dd>
-                      </div>
+                      <Stat
+                        label="Bedrooms"
+                        value={
+                          plan.bedrooms === 0 ? "Studio" : String(plan.bedrooms)
+                        }
+                        isDark={isDark}
+                      />
+                      <Stat
+                        label="Baths"
+                        value={String(plan.bathrooms)}
+                        isDark={isDark}
+                      />
+                      <Stat
+                        label="From"
+                        value={plan.startingPrice}
+                        isDark={isDark}
+                        accent
+                      />
                     </dl>
 
                     <div className="mt-10">
@@ -191,5 +152,40 @@ export default function FloorPlansPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  isDark,
+  accent,
+}: {
+  label: string;
+  value: string;
+  isDark: boolean;
+  accent?: boolean;
+}) {
+  return (
+    <div>
+      <dt
+        className={`font-body text-[10px] uppercase tracking-[0.22em] ${
+          isDark ? "text-[var(--color-bg)]/50" : "text-[var(--color-muted)]"
+        }`}
+      >
+        {label}
+      </dt>
+      <dd
+        className={`mt-2 font-display text-3xl ${
+          accent
+            ? "text-[var(--color-terracotta)]"
+            : isDark
+              ? "text-[var(--color-bg)]"
+              : "text-[var(--color-fg)]"
+        }`}
+      >
+        {value}
+      </dd>
+    </div>
   );
 }
